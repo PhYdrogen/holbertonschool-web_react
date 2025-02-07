@@ -1,3 +1,4 @@
 node_modules/
 **/.idea/
 Webpack/task*/dist/main.js
+**/*-lock.json
