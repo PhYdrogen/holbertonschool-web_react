@@ -1,5 +1,5 @@
 import $ from "jquery";
-import lodash from "lodash";
+import _ from "lodash";
 
 $(document).ready(() => {
     const b = $("body");
@@ -12,7 +12,7 @@ $(document).ready(() => {
 
 let click = 1;
 function updateCounter() {
-    lodash.debounce(() => {
+    _.debounce(() => {
         const c = $('#count');
         c.innerText = `${click} clicks on the button`;
         click = click + 1;
