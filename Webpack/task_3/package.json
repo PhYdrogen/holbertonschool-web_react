@@ -4,7 +4,8 @@
     "main": "js/dashboard_main.js",
     "license": "MIT",
     "scripts": {
-        "build": "webpack"
+        "build": "webpack",
+        "start-dev": "webpack-dev-server --open"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^4.0.0-alpha.0",
