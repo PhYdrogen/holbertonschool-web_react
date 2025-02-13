@@ -1,10 +1,10 @@
 import $ from "jquery";
 import debounce from "lodash/debounce";
 
-let click = 0;
 const updateCounter = () => {
-    click = click + 1;
-    $('#count').text(click + ' clicks on the button');
+    let countTag = $('#count');
+    let click = parseInt(countTag.attr('click_count')) || 0;
+    $('button').text(++click + ' clicks on the button');
 }
 
 const b = $("body");
