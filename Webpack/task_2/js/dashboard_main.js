@@ -1,5 +1,6 @@
 import $ from "jquery";
 import debounce from "lodash/debounce";
+import '../css/main.css';
 
 let click = 0;
 const updateCounter = () => {
@@ -9,6 +10,7 @@ const updateCounter = () => {
 
 $(document).ready(() => {
     const b = $("body");
+    b.append('<div id="logo"></div>');
     b.append("<p>Holberton Dashboard</p>");
     b.append("<p>Dashboard data for the students</p>");
     b.append("<button>Click here to get started</button>");

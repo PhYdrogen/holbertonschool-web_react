@@ -4,7 +4,7 @@
     "main": "src/index.js",
     "license": "MIT",
     "scripts": {
-        "build": "webpack --stats-children"
+        "build": "webpack"
     },
     "dependencies": {
         "jquery": "^3.7.1",
