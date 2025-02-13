@@ -1,11 +1,15 @@
 {
-    "name": "task_2",
+    "name": "task_1",
     "version": "1.0.0",
+    "description": "Task 1",
     "main": "webpack.config.js",
-    "license": "MIT",
     "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack"
     },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
     "devDependencies": {
         "css-loader": "^5.2.4",
         "file-loader": "^6.2.0",
