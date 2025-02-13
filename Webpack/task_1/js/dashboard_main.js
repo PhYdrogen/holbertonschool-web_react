@@ -10,7 +10,7 @@ const updateCounter = () => {
 const b = $("body");
 b.append("<p>Holberton Dashboard</p>");
 b.append("<p>Dashboard data for the students</p>");
-b.append("<button>Click here to get started</button>");
+b.append("<button>").text('Click here to get started');
 b.append("<p id='count'></p>");
 b.append("<p>Copyright - Holberton School</p>");
 
