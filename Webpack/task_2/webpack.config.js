@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
     mode: 'production',
     entry: './js/dashboard_main.js',
@@ -30,6 +32,7 @@ module.exports = {
             },
         ],
     },
+    plugins: [new HtmlWebpackPlugin()],
     resolve: {
         extensions: ['.js'],
     },
