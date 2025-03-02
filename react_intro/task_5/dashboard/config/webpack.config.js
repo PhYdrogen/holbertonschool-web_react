@@ -28,11 +28,23 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                },
+            },
         ],
     },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
     devServer: {
-        contentBase: '../src/',
+        static: {
+            directory: path.join(__dirname, '../src'),
+        },
         port: 8564,
         hot: true,
-      },
+    },
 };
