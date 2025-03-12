@@ -2,21 +2,3 @@
   text-align: center;
   font-family: "aktiv-grotesk", sans-serif;
 }
-
-.App-logo {
-  height: 20vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  color: rgb(206, 69, 80);
-  display: flex;
-}
-.App-body {
-  text-align: left; /* Align content to the left */
-  min-height: 60vh; /* Make it take at least 60% of the viewport height */
-  padding-left: 20px; /* Add some padding to the left for better spacing */ 
-}
-.App-footer {
-  font-style: italic;
-}
