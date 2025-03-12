@@ -2,3 +2,8 @@
   color: rgb(206, 69, 80);
   display: flex;
 }
+
+.App-logo {
+  height: 20vmin;
+  pointer-events: none;
+}
