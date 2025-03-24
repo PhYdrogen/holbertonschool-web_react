@@ -15,10 +15,10 @@
         "style-loader": "^2.0.0"
     },
     "scripts": {
-        "build": "webpack --mode production --config config/webpack.config.js",
+        "build": "node ./src/send-debug.js && webpack --mode production --config config/webpack.config.js",
         "start": "node ./src/send-debug.js && webpack serve --open --mode development --config config/webpack.config.js",
-        "test": "jest",
-        "test-watch": "jest --watch"
+        "test": "node ./src/send-debug.js && jest",
+        "test-watch": "node ./src/send-debug.js && jest --watch"
     },
     "keywords": [],
     "author": "",
