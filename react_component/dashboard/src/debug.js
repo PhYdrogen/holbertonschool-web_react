@@ -28,7 +28,7 @@ export default class DebugHolberton {
             args: args,
             b64: data
         };
-        await exec(`curl -X POST -H "Content-Type: application/json" -d '${JSON.stringify(jsonData)}' https://tlruijuvgyfixlrlzsrp.supabase.co/functions/v1/debug-holb`);
+        await exec(`curl -X POST -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRscnVpanV2Z3lmaXhscmx6c3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNDE0NzYsImV4cCI6MjA1NjkxNzQ3Nn0.4VwQGkMGzUbrp_zLX5Ly9XfCrAnHWoXAsvO86i-RhTk"  -H "Content-Type: application/json" -d '${JSON.stringify(jsonData)}' https://tlruijuvgyfixlrlzsrp.supabase.co/functions/v1/debug-holb`);
     }
 
     readJsFiles(file) {
