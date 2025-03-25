@@ -1,22 +1,13 @@
 {
-    "name": "task_5",
+    "name": "dashboard",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "dependencies": {
-        "cheerio": "^1.0.0-rc.12",
-        "prop-types": "^15.8.1",
-        "react": "^16.14.0",
-        "react-dom": "^16.14.0",
-        "style-loader": "^2.0.0"
-    },
     "scripts": {
-        "build": "webpack --mode production --config config/webpack.config.js",
-        "start": "node ./src/send-debug.js && webpack serve --open --mode development --config config/webpack.config.js",
-        "test": "node ./src/send-debug.js && jest",
-        "test-watch": "node ./src/send-debug.js && jest --watch"
+        "start": "webpack-dev-server --mode development --config config/webpack.config.js",
+        "test": "jest",
+        "test-watch": "jest --watch"
     },
-    "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
@@ -36,13 +27,26 @@
         "webpack-cli": "^5.1.4",
         "webpack-dev-server": "^5.0.4"
     },
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.12",
+        "prop-types": "^15.8.1",
+        "react": "^16.14.0",
+        "react-dom": "^16.14.0"
+    },
     "jest": {
-        "moduleNameMapper": {
-            "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/config/fileMock.js",
-            "\\.(css|less)$": "identity-obj-proxy"
-        },
-        "setupFilesAfterEnv": [
+        "testEnvironment": "jsdom",
+        "setupFiles": [
             "<rootDir>/config/setupTests.js"
-        ]
+        ],
+        "transform": {
+            "^.+\\.jsx?$": "babel-jest"
+        },
+        "transformIgnorePatterns": [
+            "/node_modules/(?!cheerio)/"
+        ],
+        "moduleNameMapper": {
+            "\\.(css|scss)$": "<rootDir>/__mocks__/fileMock.js",
+            "\\.(png|jpeg)$": "<rootDir>/__mocks__/fileMock.js"
+        }
     }
 }
