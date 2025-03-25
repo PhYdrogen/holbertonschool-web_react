@@ -7,6 +7,23 @@ import "./App.css";
 import CourseList from "../CourseList/CourseList";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.lastKey = "";
+  }
+
+  componentDidMount() {
+    document.body.addEventListener("keyup", (_) => {
+      this.lastKey = "";
+    });
+    document.body.addEventListener("keydown", (ev) => {
+      if (this.lastKey == 'Control' && ev.key == "h") {
+        this.props.logOut();
+      }
+      this.lastKey = ev.key;
+    });
+  }
+
   render() {
     return (
       <>
