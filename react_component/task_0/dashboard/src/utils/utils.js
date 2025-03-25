@@ -1,15 +1,17 @@
-export function getFullYear() {
+function getCurrentYear() {
   return new Date().getFullYear();
 }
 
-export function getFooterCopy(isIndex) {
+function getFooterCopy(isIndex) {
   if (isIndex) {
-    return 'Holberton School';
+    return "Holberton School"
   } else {
-    return 'Holberton School main dashboard';
+    return 'Holberton School main dashboard'
   }
 }
 
-export function getLatestNotification() {
-  return "<strong>Urgent requirement</strong> - complete by EOD";
+function getLatestNotification() {
+  return "<strong>Urgent requirement</strong> - complete by EOD"
 }
+
+export { getCurrentYear, getFooterCopy, getLatestNotification };

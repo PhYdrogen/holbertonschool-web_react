@@ -1,17 +1,9 @@
 .App-header {
-  padding: 6px;
-  border-bottom: 4px solid #cf4550; /* Red line */
-  display: flex;
-  /*justify-content: space-between;*/
-  align-items: center;
-}
-
-.App-header img {
-  height: 240px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #e1003c;
 }
 
 .App-header h1 {
-  padding: 10px;
-  font-size: 40px;
-  color: #cf4550;
+    color: #e1003c;
 }
