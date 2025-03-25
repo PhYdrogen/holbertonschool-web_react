@@ -1,32 +1,61 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import CourseList from "./CourseList";
+import React from 'react'
+import { shallow } from 'enzyme'
+import CourseList from './CourseList'
+import CourseListRow from './CourseListRow'
 
-describe("CourseList Component", () => {
-  describe("With CourseList Empty", () => {
-    it("renders correctly when listCourses is an empty array", () => {
-      const { getByText } = render(<CourseList listCourses={[]} />);
-      expect(getByText("No course available yet")).toBeInTheDocument();
-    });
+describe('CourseList Component', () => {
+  it('renders CourseList component without crashing', () => {
+    const wrapper = shallow(<CourseList />)
+    expect(wrapper.exists()).toBe(true)
+  })
 
-    it("renders correctly when listCourses property is not passed", () => {
-      const { getByText } = render(<CourseList />);
-      expect(getByText("No course available yet")).toBeInTheDocument();
-    });
-  });
+  describe('With an empty CourseList or no listCourses prop', () => {
+    let wrapper
 
-  describe("With CourseList containing elements", () => {
+    beforeEach(() => {
+      wrapper = shallow(<CourseList />)
+    })
+
+    it('renders the correct header and "No course available yet" row', () => {
+      const rows = wrapper.find(CourseListRow)
+      expect(rows).toHaveLength(3)
+      expect(rows.at(0).prop('textFirstCell')).toEqual('Available courses')
+      expect(rows.at(1).prop('textFirstCell')).toEqual('Course name')
+      expect(rows.at(1).prop('textSecondCell')).toEqual('Credit')
+      expect(rows.at(2).prop('textFirstCell')).toEqual(
+        'No course available yet'
+      )
+    })
+  })
+
+  describe('With CourseList containing elements', () => {
+    let wrapper
     const listCourses = [
-      { id: 1, name: "Math", credit: 3 },
-      { id: 2, name: "Science", credit: 4 },
-    ];
+      { id: 1, name: 'ES6', credit: 60 },
+      { id: 2, name: 'Webpack', credit: 20 },
+      { id: 3, name: 'React', credit: 40 }
+    ]
 
-    it("renders the list of courses correctly", () => {
-      const { getByText } = render(<CourseList listCourses={listCourses} />);
-      listCourses.forEach((course) => {
-        expect(getByText(course.name)).toBeInTheDocument();
-        expect(getByText(course.credit.toString())).toBeInTheDocument();
-      });
-    });
-  });
-});
+    beforeEach(() => {
+      wrapper = shallow(<CourseList listCourses={listCourses} />)
+    })
+
+    it('renders the correct number of rows and data', () => {
+      const rows = wrapper.find(CourseListRow)
+      expect(rows).toHaveLength(5)
+
+      expect(rows.at(0).prop('textFirstCell')).toEqual('Available courses')
+      expect(rows.at(1).prop('textFirstCell')).toEqual('Course name')
+      expect(rows.at(1).prop('textSecondCell')).toEqual('Credit')
+
+      expect(rows.at(2).prop('textFirstCell')).toEqual('ES6')
+      expect(rows.at(2).prop('textSecondCell')).toEqual(60)
+
+      expect(rows.at(3).prop('textFirstCell')).toEqual('Webpack')
+      expect(rows.at(3).prop('textSecondCell')).toEqual(20)
+
+      expect(rows.at(4).prop('textFirstCell')).toEqual('React')
+      expect(rows.at(4).prop('textSecondCell')).toEqual(40)
+    })
+  })
+})

@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import Notifications from "../Notifications/Notifications";
-import Login from "../Login/Login";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
-import "./App.css";
-import CourseList from "../CourseList/CourseList";
+import React from 'react';
+import PropTypes from 'prop-types';
+import './App.css';
+import Header from '../Header/Header';
+import Login from '../Login/Login';
+import Footer from '../Footer/Footer';
+import Notifications from '../Notifications/Notifications';
+import CourseList from '../CourseList/CourseList';
+import { getLatestNotification } from '../utils/utils';
 
-class App extends Component {
-
+class App extends React.Component {
   static propTypes = {
     isLoggedIn: PropTypes.bool,
   };
@@ -17,7 +18,6 @@ class App extends Component {
   };
 
   render() {
-
     const isIndex = true;
     const listCourses = [
       { id: 1, name: 'ES6', credit: 60 },
@@ -43,7 +43,7 @@ class App extends Component {
           <Footer isIndex={isIndex} />
         </div>
       </>
-    );
+    )
   }
 }
 
