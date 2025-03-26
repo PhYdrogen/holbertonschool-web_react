@@ -1,36 +1,53 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import React from "react";
 
-function NotificationItem({ type, html, value }) {
+class NotificationItem extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-    if (type === 'default') {
-        return (
-            <li
-                style={{ color: "blue" }}
-                data-notification-type={type}
-            >{value}</li>
-        );
-    } else if (type === 'urgent' && html !== undefined) {
-        return (
-            <li
-                style={{ color: "red" }}
-                data-notification-type={type}
-                dangerouslySetInnerHTML={html}
-            ></li>
-        );
-    } else {
-        return (
-            <li
-                style={{ color: "red" }}
-                data-notification-type={type}
-            >{value}</li>
-        );
+    render() {
+        const { type, html, value, markAsRead, id } = this.props;
+        if (type === "default") {
+            return (
+                <li
+                    style={{ color: "blue" }}
+                    data-notification-type={type}
+                    onClick={() => markAsRead(id)}
+                >
+                    {value}
+                </li>
+            );
+        } else if (type === "urgent" && html !== undefined) {
+            return (
+                <li
+                    style={{ color: "red" }}
+                    data-notification-type={type}
+                    dangerouslySetInnerHTML={html}
+                    onClick={() => markAsRead(id)}
+                >
+                </li>
+            );
+        } else {
+            return (
+                <li
+                    style={{ color: "red" }}
+                    data-notification-type={type}
+                    onClick={() => markAsRead(id)}
+                >
+                    {value}
+                </li>
+            );
+        }
     }
 }
 
 NotificationItem.propTypes = {
     type: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    markAsRead: PropTypes.func.isRequired,
     html: PropTypes.object,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
 };
 
 export default NotificationItem;
