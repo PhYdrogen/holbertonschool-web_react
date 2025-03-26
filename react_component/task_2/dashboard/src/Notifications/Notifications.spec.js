@@ -128,3 +128,22 @@ test('Should display a paragraph of "No new notification for now" whenever the l
   const notificationsTitle = screen.getByText('No new notification for now');
   expect(notificationsTitle).toBeInTheDocument();
 });
+
+test('Should log "Notification {id} has been marked as read" when a notification item is clicked', () => {
+  const props = {
+    notifications: [
+      { id: 1, type: 'default', value: 'New course available' },
+      { id: 2, type: 'urgent', value: 'New resume available' },
+      { id: 3, type: 'urgent', html: { __html: getLatestNotification() } }
+    ],
+    displayDrawer: true
+  };
+  render(<Notifications {...props} />);
+  const consoleSpy = jest.spyOn(console, 'log');
+  // Find the first notification item (you might need a more specific selector if needed)
+  const firstNotificationItem = screen.getByText('New course available');
+  fireEvent.click(firstNotificationItem);
+  // Check if console.log was called with the correct message for id 1
+  expect(consoleSpy).toHaveBeenCalledWith('Notification 1 has been marked as read');
+  consoleSpy.mockRestore(); // Restore the original console.log
+});
