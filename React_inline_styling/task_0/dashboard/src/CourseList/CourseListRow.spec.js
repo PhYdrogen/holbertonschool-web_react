@@ -71,3 +71,39 @@ test('Should render 2 "td" elements inside a "tr" element whenever the "isHeader
     expect(trElement).toBeInTheDocument()
     expect(tdElement).toHaveLength(2)
 })
+
+test('when isHeader is true, the component renders with the correct background color', () => {
+    render(
+        <table>
+            <tbody>
+                <CourseListRow isHeader={true} textFirstCell="Header" />
+            </tbody>
+        </table>
+    );
+    const trElement = screen.getByRole('row');
+    expect(trElement).toHaveStyle('background-color: rgb(222, 181, 181)'); // #deb5b545
+});
+
+test('when isHeader is true and textSecondCell is not null, renders with correct background color', () => {
+    render(
+        <table>
+            <tbody>
+                <CourseListRow isHeader={true} textFirstCell="Header1" textSecondCell="Header2" />
+            </tbody>
+        </table>
+    );
+    const trElement = screen.getByRole('row');
+    expect(trElement).toHaveStyle('background-color: rgb(222, 181, 181)'); // #deb5b545
+});
+
+test('when isHeader is false, the component renders with the correct background color', () => {
+    render(
+        <table>
+            <tbody>
+                <CourseListRow isHeader={false} textFirstCell="Data1" textSecondCell="Data2" />
+            </tbody>
+        </table>
+    );
+    const trElement = screen.getByRole('row');
+    expect(trElement).toHaveStyle('background-color: rgb(245, 245, 245)'); // #f5f5f5ab
+});
