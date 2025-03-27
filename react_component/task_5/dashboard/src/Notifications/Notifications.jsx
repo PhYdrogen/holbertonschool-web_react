@@ -9,6 +9,11 @@ export default class Notifications extends React.Component {
     super(props);
   }
 
+  shouldComponentUpdate(nextProps) {
+    // Only update if the number of notifications has changed
+    return nextProps.notifications.length > this.props.notifications.length;
+  }
+
   markAsRead(id) {
     console.log(`Notification ${id} has been marked as read`);
   }
