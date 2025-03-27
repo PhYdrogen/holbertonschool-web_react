@@ -1,89 +1,85 @@
-import "./Notifications.css";
-import closeBtn from "../assets/close-button.png";
-import NotificationItem from "./NotificationItem";
-import PropTypes from "prop-types";
-import React from "react";
+import { Component } from 'react';
+import './Notifications.css';
+import closeIcon from '../assets/close-button.png';
+import NotificationItem from './NotificationItem';
+import PropTypes from 'prop-types';
 
-export default class Notifications extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+class Notifications extends Component {
+    constructor(props) {
+        super(props)
+    }
 
-  shouldComponentUpdate(nextProps) {
-    // Only update if the number of notifications has changed
-    return nextProps.notifications.length > this.props.notifications.length;
-  }
+    markAsRead = (id) => {
+        console.log(`Notification ${id + 1} has been marked as read`);
+    }
 
-  markAsRead(id) {
-    console.log(`Notification ${id} has been marked as read`);
-  }
+    shouldComponentUpdate(nextProps) {
+        return (
+            nextProps.notifications.length >
+            this.props.notifications.length ||
+            nextProps.displayDrawer !== this.props.displayDrawer
+        );
+    }
 
-  render() {
-    console.log(this.props);
-
-    return (
-      <>
-        <div className="notification-title">Your notifications</div>
-        {this.props.displayDrawer
-          ? (
-            <div className="Notifications">
-              {this.props.notifications.length > 0
-                ? (
-                  <>
-                    <p>Here is the list of notifications</p>
-                    <button
-                      onClick={() =>
-                        console.log(
-                          "Close button has been clicked",
-                        )}
-                      aria-label="Close"
-                    >
-                      <img
-                        src={closeBtn}
-                        width={30}
-                        height={30}
-                        alt="close button"
-                      />
-                    </button>
-                    <ul>
-                      {this.props.notifications.map((
-                        notification,
-                        index,
-                      ) => (
-                        <NotificationItem
-                          key={index}
-                          id={notification.id}
-                          type={notification.type}
-                          value={notification.value}
-                          html={notification.html}
-                          markAsRead={this.markAsRead}
-                        />
-                      ))}
-                    </ul>
-                  </>
-                )
-                : <p>No new notification for now</p>}
-            </div>
-          )
-          : null}
-      </>
-    );
-  }
+    render() {
+        const { notifications = [], displayDrawer = true } = this.props;
+        return (
+            <>
+                <div className="notification-title">Your notifications</div>
+                {
+                    displayDrawer ? (
+                        <div className='Notifications'>
+                            {notifications.length > 0 ? (
+                                <>
+                                    <p>Here is the list of notifications</p>
+                                    <button
+                                        onClick={() => console.log('Close button has been clicked')}
+                                        aria-label='Close'
+                                    >
+                                        <img src={closeIcon} alt='close icon' />
+                                    </button>
+                                    <ul>
+                                        {notifications.map((notification, index) => (
+                                            <NotificationItem
+                                                id={index}
+                                                key={notification.id}
+                                                type={notification.type}
+                                                value={notification.value}
+                                                html={notification.html}
+                                                markAsRead={this.markAsRead}
+                                            />
+                                        ))}
+                                    </ul>
+                                </>
+                            ) : (
+                                <p>No new notification for now</p>
+                            )}
+                        </div>
+                    ) :
+                        ([])
+                }
+            </>
+        );
+    }
 }
 
 Notifications.propTypes = {
-  notifications: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      type: PropTypes.string,
-      value: PropTypes.string,
-      html: PropTypes.object,
-    }),
-  ),
-  displayDrawer: PropTypes.bool,
+    notifications: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            type: PropTypes.string.isRequired,
+            value: PropTypes.string,
+            html: PropTypes.shape({
+                __html: PropTypes.string,
+            }),
+        })
+    ),
+    displayDrawer: PropTypes.bool,
 };
 
 Notifications.defaultProps = {
-  notifications: [],
-  displayDrawer: true,
+    notifications: [],
+    displayDrawer: true,
 };
+
+export default Notifications

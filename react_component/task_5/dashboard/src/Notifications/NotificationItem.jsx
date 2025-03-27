@@ -1,14 +1,10 @@
-import PropTypes from "prop-types";
-import React, { PureComponent } from "react";
+import PropTypes from 'prop-types';
+import { PureComponent } from 'react';
 
 class NotificationItem extends PureComponent {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const { type, html, value, markAsRead, id } = this.props;
-        if (type === "default") {
+        if (type === 'default') {
             return (
                 <li
                     style={{ color: "blue" }}
@@ -18,15 +14,14 @@ class NotificationItem extends PureComponent {
                     {value}
                 </li>
             );
-        } else if (type === "urgent" && html !== undefined) {
+        } else if (type === 'urgent' && html !== undefined) {
             return (
                 <li
                     style={{ color: "red" }}
                     data-notification-type={type}
                     dangerouslySetInnerHTML={html}
                     onClick={() => markAsRead(id)}
-                >
-                </li>
+                ></li>
             );
         } else {
             return (
@@ -44,10 +39,18 @@ class NotificationItem extends PureComponent {
 
 NotificationItem.propTypes = {
     type: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    markAsRead: PropTypes.func.isRequired,
-    html: PropTypes.object,
+    html: PropTypes.shape({
+        __html: PropTypes.string,
+    }),
     value: PropTypes.string,
+    markAsRead: PropTypes.func.isRequired,
+    id: PropTypes.number.isRequired,
+};
+
+NotificationItem.defaultProps = {
+    type: 'default',
+    html: undefined,
+    value: '',
 };
 
 export default NotificationItem;
