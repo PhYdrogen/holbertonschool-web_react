@@ -1,6 +1,6 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import react from 'eslint-plugin-react';
+import js from '@eslint/js'
+import globals from 'globals'
+import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
@@ -10,7 +10,12 @@ export default [
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        jest: 'readonly',
+        expect: 'readonly',
+        test: 'readonly',
+      },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
@@ -34,18 +39,5 @@ export default [
         { allowConstantExport: true },
       ],
     },
-  },
-  // Configuration for test files
-  {
-    files: ['**/*.spec.{js,jsx}'], // Target spec files
-    languageOptions: {
-      globals: {
-        ...globals.browser, // Keep browser globals
-        ...globals.jest,    // Add jest globals
-      },
-    },
-    // If using eslint-plugin-jest, configure it here
-    // plugins: { jest },
-    // rules: { ...jest.configs.recommended.rules }
   },
 ]

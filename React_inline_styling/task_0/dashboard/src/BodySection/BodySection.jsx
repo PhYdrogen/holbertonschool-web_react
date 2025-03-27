@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 function BodySection({ title, children }) {
     return (
@@ -12,6 +12,10 @@ function BodySection({ title, children }) {
 BodySection.propTypes = {
     title: PropTypes.string.isRequired,
     children: PropTypes.node,
+};
+
+BodySection.defaultProps = {
+    children: null,
 };
 
 export default BodySection;

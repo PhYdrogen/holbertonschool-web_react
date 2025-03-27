@@ -1,23 +1,26 @@
 import PropTypes from "prop-types";
 
-CourseListRow.propTypes = {
-    isHeader: PropTypes.bool.isRequired,
-    textFirstCell: PropTypes.string.isRequired,
-    textSecondCell: PropTypes.string.isRequired,
-};
-
+// Define styles as constants
 const rowStyle = { backgroundColor: "#f5f5f5ab" };
 const headerStyle = { backgroundColor: "#deb5b545" };
+
+CourseListRow.propTypes = {
+    isHeader: PropTypes.bool, // isHeader is not required, it has a default value
+    textFirstCell: PropTypes.string.isRequired,
+    textSecondCell: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Allow number for textSecondCell
+};
 
 export default function CourseListRow({
     isHeader = false,
     textFirstCell = "",
     textSecondCell = null,
 }) {
-    const style = isHeader ? headerStyle : rowStyle;
+    // Determine the style based on isHeader
+    const appliedStyle = isHeader ? headerStyle : rowStyle;
 
     return (
-        <tr style={style}>
+        // Apply the style to the tr element
+        <tr style={appliedStyle}>
             {isHeader
                 ? (
                     textSecondCell === null

@@ -1,6 +1,4 @@
-import React from "react"; // Import React if not already present
-import "./Login.css";
-import WithLogging from "../HOC/WithLogging"; // Import the HOC
+import './Login.css';
 
 function Login() {
     return (
@@ -15,7 +13,4 @@ function Login() {
     );
 }
 
-// Wrap the Login component with the HOC before exporting
-const LoginWithLogging = WithLogging(Login);
-
-export default LoginWithLogging;
+export default Login;

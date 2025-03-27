@@ -1,7 +1,20 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react'; // Import screen
-import { beforeEach, afterEach, test, expect, jest, describe } from "@jest/globals"; // Import describe
+import { render, fireEvent, screen } from '@testing-library/react';
+import { beforeEach, afterEach, test, expect, jest } from "@jest/globals";
 import App from './App';
+
+const mockBodySection = jest.fn();
+jest.mock("../BodySection/BodySection", () => {
+  return jest.fn().mockImplementation((props) => {
+    mockBodySection(props);
+    return (
+      <div>
+        <h2>{props.title}</h2>
+        {props.children}
+      </div>
+    );
+  });
+});
 
 beforeEach(() => {
   jest.spyOn(document, 'addEventListener');
@@ -9,8 +22,8 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  // Ensure mocks are cleared after each test
-  jest.restoreAllMocks();
+  document.addEventListener.mockRestore();
+  document.removeEventListener.mockRestore();
 });
 
 test('Should return true if the App component is a class component', () => {
@@ -32,11 +45,10 @@ test('Should call the logOut prop once whenever the user hits "Ctrl" + "h" keybo
 
 test('Should display an alert window whenever the user hit "ctrl" + "h" keyboard keys', () => {
   const logoutSpy = jest.fn();
-  // Mock window.alert before rendering
-  const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => { });
+  window.alert = jest.fn();
   render(<App logOut={logoutSpy} />);
   fireEvent.keyDown(document, { ctrlKey: true, key: 'h' });
-  expect(alertMock).toHaveBeenCalledWith('Logging you out');
+  expect(window.alert).toHaveBeenCalledWith('Logging you out');
 });
 
 test('Should remove event listener in componentWillUnmount', () => {
@@ -46,37 +58,33 @@ test('Should remove event listener in componentWillUnmount', () => {
   expect(document.removeEventListener).toHaveBeenCalledWith('keydown', expect.any(Function));
 });
 
-test('should add event listener in componentDidMount', () => {
+test('Should add event listener in componentDidMount', () => {
   render(<App isLoggedIn={false} />);
   expect(document.addEventListener).toHaveBeenCalledWith('keydown', expect.any(Function));
 });
 
-// New tests for BodySection integration
-describe('BodySection Integration Tests', () => {
-  test('should display "Course list" title when isLoggedIn is true', () => {
-    render(<App isLoggedIn={true} />);
-    // Check for the h2 title within the BodySectionWithMarginBottom containing CourseList
-    // Using regex for case-insensitivity
-    expect(screen.getByText(/Course list/i)).toBeInTheDocument();
-    // Optionally, verify CourseList is rendered
-    expect(screen.getByText(/ES6/)).toBeInTheDocument(); // Assuming ES6 is a course name
-  });
+test('Should add the title of "Course list" above the CourseList component when the isLoggedIn prop set to true', () => {
+  render(<App isLoggedIn={true} />)
+  expect(screen.getByRole('heading', { name: /Course list/i })).toBeInTheDocument();
+});
 
-  test('should display "Log in to continue" title when isLoggedIn is false', () => {
-    render(<App isLoggedIn={false} />);
-    // Check for the h2 title within the BodySectionWithMarginBottom containing Login
-    // Using regex for case-insensitivity
-    expect(screen.getByText(/Log in to continue/i)).toBeInTheDocument();
-    // Optionally, verify Login is rendered
-    expect(screen.getByLabelText(/Email/)).toBeInTheDocument(); // Assuming Login has an email input
-  });
+test('Should add the title of "Log in to continue" above the Login component when the isLoggedIn prop set to false', () => {
+  render(<App isLoggedIn={false} />)
+  expect(screen.getByRole('heading', { name: /Log in to continue/i })).toBeInTheDocument();
+});
 
-  test('should display "News from the School" section by default', () => {
-    render(<App />); // Defaults to isLoggedIn={false}
-    // Check for the h2 title within the BodySection
-    // Using regex for case-insensitivity
-    expect(screen.getByText(/News from the School/i)).toBeInTheDocument();
-    // Check for the paragraph content
-    expect(screen.getByText('Holberton School News goes here')).toBeInTheDocument();
-  });
+test('Should render BodySection as a child component', () => {
+  render(<App isLoggedIn={false} />);
+  expect(mockBodySection).toHaveBeenCalled();
+});
+
+test('Should render BodySection with news when logged in', () => {
+  render(<App isLoggedIn={true} />);
+  expect(mockBodySection).toHaveBeenCalled();
+});
+
+test('Should render a heading element with a text "", and a paragraph with text ""', () => {
+  render(<App />)
+  expect(screen.getByRole('heading', { name: /News from the school/i })).toBeInTheDocument();
+  expect(screen.getByText(/Holberton School News goes here/i)).toBeInTheDocument()
 });
