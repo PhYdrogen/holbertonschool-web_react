@@ -1,43 +1,34 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-// Define styles as constants
-const rowStyle = { backgroundColor: "#f5f5f5ab" };
-const headerStyle = { backgroundColor: "#deb5b545" };
+const headerStyle = { backgroundColor: '#deb5b545' };
+const rowStyle = { backgroundColor: '#f5f5f5ab' };
 
 CourseListRow.propTypes = {
-    isHeader: PropTypes.bool, // isHeader is not required, it has a default value
+    isHeader: PropTypes.bool.isRequired,
     textFirstCell: PropTypes.string.isRequired,
-    textSecondCell: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Allow number for textSecondCell
+    textSecondCell: PropTypes.string.isRequired,
 };
 
 export default function CourseListRow({
     isHeader = false,
-    textFirstCell = "",
+    textFirstCell = '',
     textSecondCell = null,
 }) {
-    // Determine the style based on isHeader
-    const appliedStyle = isHeader ? headerStyle : rowStyle;
+    const style = isHeader ? headerStyle : rowStyle;
 
     return (
-        // Apply the style to the tr element
-        <tr style={appliedStyle}>
-            {isHeader
-                ? (
-                    textSecondCell === null
-                        ? <th colSpan={2}>{textFirstCell}</th>
-                        : (
-                            <>
-                                <th>{textFirstCell}</th>
-                                <th>{textSecondCell}</th>
-                            </>
-                        )
-                )
-                : (
-                    <>
-                        <td>{textFirstCell}</td>
-                        <td>{textSecondCell}</td>
-                    </>
-                )}
+        <tr style={style}>
+            {isHeader ? (
+                <>
+                    <th colSpan={textSecondCell ? 1 : 2}>{textFirstCell}</th>
+                    {textSecondCell && <th>{textSecondCell}</th>}
+                </>
+            ) : (
+                <>
+                    <td>{textFirstCell}</td>
+                    <td>{textSecondCell}</td>
+                </>
+            )}
         </tr>
     );
 }
