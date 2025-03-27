@@ -63,8 +63,8 @@ test('when isHeader is true and secondTextCell is not null, the cell background 
         </table>
     );
     const trElement = screen.getByRole('row');
-    // Using rgb equivalent for #deb5b545
-    expect(trElement).toHaveStyle('background-color: rgb(222, 181, 181)');
+    // Using rgba equivalent for #deb5b545
+    expect(trElement).toHaveStyle('background-color: rgba(222, 181, 181, 0.271)');
 });
 
 test('when isHeader is false, the cell background color is #f5f5f5ab', () => {
@@ -76,8 +76,8 @@ test('when isHeader is false, the cell background color is #f5f5f5ab', () => {
         </table>
     );
     const trElement = screen.getByRole('row');
-    // Using rgb equivalent for #f5f5f5ab (alpha ignored by default in matcher)
-    expect(trElement).toHaveStyle('background-color: rgb(245, 245, 245)');
+    // Using rgba equivalent for #f5f5f5ab
+    expect(trElement).toHaveStyle('background-color: rgba(245, 245, 245, 0.671)');
 });
 
 // Adjusted existing test for clarity
