@@ -1,5 +1,9 @@
 import React from 'react';
+import { StyleSheetTestUtils } from 'aphrodite';
 import { shallow } from 'enzyme';
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
 import App from './App';
 import Notifications from '../Notifications/Notifications';
 import Header from '../Header/Header';
@@ -56,7 +60,7 @@ describe('<App />', () => {
   describe('Keyboard event tests', () => {
     it('calls logOut function and displays alert when Ctrl+H is pressed', () => {
       const mockLogOut = jest.fn()
-      const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {})
+      const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => { })
 
       // Simuler l'événement keydown
       const wrapper = shallow(<App logOut={mockLogOut} />)

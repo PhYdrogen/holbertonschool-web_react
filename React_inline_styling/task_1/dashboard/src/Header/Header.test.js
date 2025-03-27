@@ -1,5 +1,10 @@
-import React from 'react'
-import { shallow } from 'enzyme'
+import React from 'react';
+import { StyleSheetTestUtils } from 'aphrodite';
+import { shallow } from 'enzyme';
+
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
 import Header from '../Header/Header'
 import logo from '../assets/holberton-logo.jpg' // Importation du logo pour les tests
 

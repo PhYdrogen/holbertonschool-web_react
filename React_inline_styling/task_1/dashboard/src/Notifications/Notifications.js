@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Notifications.css';
+import { StyleSheet, css } from 'aphrodite';
 import NotificationItem from './NotificationItem';
 import NotificationItemShape from './NotificationItemShape';
 
@@ -31,14 +31,14 @@ class Notifications extends React.Component {
   }
 
   render() {
-    const { displayDrawer, listNotifications } = this.props
+    const { displayDrawer, listNotifications } = this.props;
     return (
-      <div className="menuItem">
+      <div className={css(styles.menuItem)}>
         <p>Your notifications</p>
         {displayDrawer ? (
-          <div className="Notifications">
+          <div className={css(styles.notifications)}>
             <button
-              style={{
+              style={{ // Keep inline styles for the button as they are dynamic/positional
                 position: 'absolute',
                 top: 10,
                 right: 10,
@@ -78,5 +78,22 @@ class Notifications extends React.Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  menuItem: {
+    display: 'flex',
+    justifyContent: 'right',
+    padding: '5px',
+    marginRight: '10px',
+  },
+  notifications: {
+    position: 'absolute',
+    border: 'dashed #cf4550 2px',
+    padding: '10px',
+    width: '30%',
+    right: '1rem',
+    top: '4rem',
+  },
+});
 
 export default Notifications;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './App.css';
+import { StyleSheet, css } from 'aphrodite';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
@@ -20,7 +20,7 @@ class App extends React.Component {
 
   static defaultProps = {
     isLoggedIn: false,
-    logOut: () => {}
+    logOut: () => { }
   };
 
   componentDidMount() {
@@ -57,7 +57,7 @@ class App extends React.Component {
     return (
       <>
         <LoginWithNotifications listNotifications={listNotifications} />
-        <div className="App">
+        <div className={css(styles.app)}>
           <Header />
           {this.props.isLoggedIn ? (
             <BodySectionWithMarginBottom title="Course list">
@@ -79,5 +79,14 @@ class App extends React.Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  app: {
+    fontFamily: 'Arial, Helvetica, sans-serif',
+    // Add other base styles if needed, replicating global body styles perhaps
+    // For now, keeping it minimal as App.css was empty.
+  },
+  // Define footer styles here if needed, e.g., styles.footer
+});
 
 export default App;
