@@ -44,7 +44,12 @@ function App({ isLoggedIn }) {
     );
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
+    if (state.get && typeof state.get === 'function') {
+        return {
+            isLoggedIn: state.get('isUserLoggedIn')
+        };
+    }
     return {
         isLoggedIn: state.auth.isLoggedIn
     };
