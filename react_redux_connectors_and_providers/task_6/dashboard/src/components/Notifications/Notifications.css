@@ -1,0 +1,29 @@
+.notifications-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.menuItem {
+  text-align: right;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.Notifications {
+  border: 1px dashed #e0354b;
+  padding: 1rem;
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  background-color: white;
+  z-index: 10;
+  min-width: 250px;
+}
+
+.Notifications ul {
+  padding-left: 20px;
+}
+
+.Notifications li {
+  margin-bottom: 0.5rem;
+}
