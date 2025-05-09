@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { fetchNotifications } from './features/notifications/notificationsSlice';
 import { fetchCourses } from './features/courses/coursesSlice';
+import { displayNotificationDrawer, hideNotificationDrawer } from './uiActions';
+import PropTypes from 'prop-types';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Login from './pages/Login/Login';
@@ -10,7 +12,7 @@ import Notifications from './components/Notifications/Notifications';
 import BodySection from './components/BodySection/BodySection';
 import BodySectionWithMarginBottom from './components/BodySectionWithMarginBottom/BodySectionWithMarginBottom';
 
-function App({ isLoggedIn }) {
+function App({ isLoggedIn, displayNotificationDrawer, hideNotificationDrawer }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,7 +27,10 @@ function App({ isLoggedIn }) {
 
     return (
         <>
-            <Notifications />
+            <Notifications 
+                displayDrawer={displayNotificationDrawer}
+                hideDrawer={hideNotificationDrawer}
+            />
             <Header />
             {!isLoggedIn ? (
                 <BodySectionWithMarginBottom title="Log in to continue">
@@ -44,10 +49,32 @@ function App({ isLoggedIn }) {
     );
 }
 
-const mapStateToProps = (state) => {
+App.propTypes = {
+    isLoggedIn: PropTypes.bool,
+    displayNotificationDrawer: PropTypes.func,
+    hideNotificationDrawer: PropTypes.func
+};
+
+App.defaultProps = {
+    isLoggedIn: false,
+    displayNotificationDrawer: () => {},
+    hideNotificationDrawer: () => {}
+};
+
+export const mapStateToProps = (state) => {
+    if (state.get && typeof state.get === 'function') {
+        return {
+            isLoggedIn: state.get('isUserLoggedIn')
+        };
+    }
     return {
         isLoggedIn: state.auth.isLoggedIn
     };
 };
 
-export default connect(mapStateToProps)(App);
+export const mapDispatchToProps = {
+    displayNotificationDrawer,
+    hideNotificationDrawer
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
