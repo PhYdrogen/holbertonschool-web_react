@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { fetchNotifications } from './features/notifications/notificationsSlice';
 import { fetchCourses } from './features/courses/coursesSlice';
-import { displayNotificationDrawer, hideNotificationDrawer } from './uiActions';
+import { displayNotificationDrawer, hideNotificationDrawer, loginRequest } from './uiActions';
 import PropTypes from 'prop-types';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -12,7 +12,7 @@ import Notifications from './components/Notifications/Notifications';
 import BodySection from './components/BodySection/BodySection';
 import BodySectionWithMarginBottom from './components/BodySectionWithMarginBottom/BodySectionWithMarginBottom';
 
-function App({ isLoggedIn, displayNotificationDrawer, hideNotificationDrawer }) {
+function App({ isLoggedIn, displayNotificationDrawer, hideNotificationDrawer, login }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function App({ isLoggedIn, displayNotificationDrawer, hideNotificationDrawer }) 
             <Header />
             {!isLoggedIn ? (
                 <BodySectionWithMarginBottom title="Log in to continue">
-                    <Login />
+                    <Login onLogin={login} />
                 </BodySectionWithMarginBottom>
             ) : (
                 <BodySectionWithMarginBottom title="Course list">
@@ -52,13 +52,15 @@ function App({ isLoggedIn, displayNotificationDrawer, hideNotificationDrawer }) 
 App.propTypes = {
     isLoggedIn: PropTypes.bool,
     displayNotificationDrawer: PropTypes.func,
-    hideNotificationDrawer: PropTypes.func
+    hideNotificationDrawer: PropTypes.func,
+    login: PropTypes.func
 };
 
 App.defaultProps = {
     isLoggedIn: false,
     displayNotificationDrawer: () => {},
-    hideNotificationDrawer: () => {}
+    hideNotificationDrawer: () => {},
+    login: () => {}
 };
 
 export const mapStateToProps = (state) => {
@@ -74,7 +76,8 @@ export const mapStateToProps = (state) => {
 
 export const mapDispatchToProps = {
     displayNotificationDrawer,
-    hideNotificationDrawer
+    hideNotificationDrawer,
+    login: loginRequest
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

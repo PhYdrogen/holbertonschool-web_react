@@ -1,13 +1,33 @@
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { getCurrentYear, getFooterCopy } from '../../utils/utils';
 import './Footer.css';
 
-export default function Footer() {
-    const { isLoggedIn } = useSelector((state) => state.auth);
+function Footer({ user }) {
     return (
         <div className="App-footer">
             <p>Copyright {getCurrentYear()} - {getFooterCopy(true)}</p>
-            {isLoggedIn && <a href="#">Contact us</a>}
+            {user && user.isLoggedIn && <a href="#">Contact us</a>}
         </div>
     );
 }
+
+Footer.propTypes = {
+    user: PropTypes.shape({
+        email: PropTypes.string,
+        password: PropTypes.string,
+        isLoggedIn: PropTypes.bool
+    })
+};
+
+Footer.defaultProps = {
+    user: null
+};
+
+export const mapStateToProps = (state) => {
+    return {
+        user: state.auth
+    };
+};
+
+export default connect(mapStateToProps)(Footer);

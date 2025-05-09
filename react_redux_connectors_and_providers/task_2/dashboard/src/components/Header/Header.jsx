@@ -1,24 +1,49 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../features/auth/authSlice';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../../uiActions';
 import './Header.css';
 import logo from '../../assets/holberton-logo.jpg';
 
-export default function Header() {
-    const dispatch = useDispatch();
-    const { isLoggedIn, user } = useSelector((state) => state.auth);
+function Header({ user, logout }) {
     const handleLogout = () => {
-        dispatch(logout());
+        logout();
     };
 
     return (
         <div className="App-header">
             <img src={logo} className="App-logo" alt="holberton logo" />
             <h1>School Dashboard</h1>
-            {isLoggedIn ? (
+            {user && user.isLoggedIn ? (
                 <div id="logoutSection">
                     Welcome <b>{user.email}</b> <a href="#" onClick={handleLogout}>(logout)</a>
                 </div>
             ) : null}
         </div>
     );
+}
+
+Header.propTypes = {
+    user: PropTypes.shape({
+        email: PropTypes.string,
+        password: PropTypes.string,
+        isLoggedIn: PropTypes.bool
+    }),
+    logout: PropTypes.func
 };
+
+Header.defaultProps = {
+    user: null,
+    logout: () => {}
+};
+
+export const mapStateToProps = (state) => {
+    return {
+        user: state.auth
+    };
+};
+
+export const mapDispatchToProps = {
+    logout
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
