@@ -1,0 +1,26 @@
+.CourseList {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+#CourseList {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+
+#CourseList th {
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+#CourseList td {
+  padding: 0.5rem;
+}
+
+#CourseList input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
